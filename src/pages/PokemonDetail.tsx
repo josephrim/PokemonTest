@@ -26,7 +26,7 @@ const PokemonDetailPage = () => {
   }, [name]);
 
   const handleGoBack = () => {
-    navigate('/');
+    navigate(-1);
   };
 
   if (!pokemonDetail) {

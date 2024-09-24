@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import { Grid2, Pagination, Box } from '@mui/material';
 
@@ -8,12 +9,21 @@ import usePokemonList from '../hooks/usePokemonList';
 import '../styles/global.scss';
 
 const PokemonList = () => {
-  const [page, setPage] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
   const { pokemonList, fetchPokemon } = usePokemonList();
+  
+  const currentPage = useMemo(
+    () => parseInt(searchParams.get('page') || '1', 10)
+    , [searchParams]
+  );
 
   useEffect(() => {
-    fetchPokemon(page);
-  }, [page]);
+    fetchPokemon(currentPage);
+  }, [currentPage]);
+
+  const handlePageChange = (_: React.ChangeEvent<unknown>, page: number) => {
+    setSearchParams({ page: page.toString() });
+  };
 
   return (
     <div className="pokemon-list">
@@ -30,8 +40,8 @@ const PokemonList = () => {
       <Box display="flex" justifyContent="center" sx={{ mt: 3 }}>
         <Pagination 
           count={10} 
-          page={page} 
-          onChange={(e, value) => setPage(value)} 
+          page={currentPage} 
+          onChange={handlePageChange} 
         />
       </Box>
     </div>
