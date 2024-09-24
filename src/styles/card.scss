@@ -1,0 +1,19 @@
+.pokemon-card {
+  transition: transform 0.3s;
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.pokemon-name {
+  text-transform: capitalize;
+  text-align: center;
+}
+
+.details-link {
+  color: #0073e6;
+  text-decoration: none;
+  font-weight: bold;
+  display: block;
+  text-align: center;
+}
